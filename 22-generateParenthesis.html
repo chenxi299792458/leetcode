@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<script>
+    var generateParenthesis = function (n) {
+        let result = [];
+        backtrack(result, n, 0, 0, '');
+        return result;
+    };
+
+    let backtrack = (result, max, open, close, current) => {
+        if (open + close == 2 * max) {
+            result.push(current);
+            return;
+        }
+        if (open < max) {
+            backtrack(result, max, open + 1, close, current + '(');
+        }
+        if (open > close) {
+            backtrack(result, max, open, close + 1, current + ')');
+        }
+
+    }
+
+    console.log(generateParenthesis(1));
+</script>
+
+</html>
