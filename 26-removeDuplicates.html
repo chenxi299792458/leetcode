@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<script>
+    let num = [1,1,1];
+
+    var removeDuplicates = function (num) {
+        let key = null;
+        for (let i = 0; i < num.length;) {
+            if (key != num[i]) {
+                key = num[i];
+                i++;
+            } else {
+                num.splice(i - 1, 1);
+            }
+        }
+        return num.length
+    };
+
+    console.log(removeDuplicates(num));
+</script>
+
+</html>
