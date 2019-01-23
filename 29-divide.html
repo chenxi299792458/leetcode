@@ -5,35 +5,61 @@
 </head>
 
 <script>
-    var dividend = -2,
-        divisor = -1;
+    var dividend = 1026117192,
+        divisor = -874002063;
 
     var divide = function (dividend, divisor) {
-        // -2147483648~2147483647
-        let index = 0;
+        let isNegative = (dividend < 0) ^ (divisor < 0);
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        let rate = 0;
         let sum = 0;
-        let isNegative = false;
-        if (dividend < 0) {
-            isNegative = !isNegative;
-            dividend = Math.abs(dividend);
+        let _divisor = divisor;
+        if (dividend < divisor) {
+            return func(0, 0);
         }
-        if (divisor < 0) {
-            isNegative = !isNegative;
-            divisor = Math.abs(divisor);
+        if (dividend == divisor) {
+            return func(1, isNegative);
         }
-        while (sum <= dividend) {
-            index++;
-            sum += divisor;
+        if (divisor == 1) {
+            return func(dividend, isNegative);
         }
-        let result = isNegative ? 1 - index : index - 1;
-        if (result < -2147483648) {
-            return -2147483648;
-        } else if (result > 2147483647) {
-            return 2147483647;
+        while (dividend > divisor) {
+            _divisor = divisor;
+            rate = 1;
+            while (dividend > _divisor) {
+                if (dividend - _divisor <= _divisor) {
+                    dividend = dividend - _divisor;
+                    break;
+                }
+                rate *= 2;
+                _divisor = _divisor << 1;
+            }
+            sum += rate;
+            if (rate === 2) {
+                break;
+            }
         }
-        return result
+        while (dividend >= divisor) {
+            sum += 1;
+            dividend -= divisor;
+        }
+        return func(sum, isNegative);
     };
-    console.log(divide(dividend, divisor));
+
+    let func = (number, isNegative) => {
+        let minNumber = -2147483648;
+        let maxNumber = 2147483647;
+        number = isNegative === 0 ? number : -number;
+        if (number < minNumber) {
+            return minNumber;
+        }
+        if (number > maxNumber) {
+            return maxNumber;
+        }
+        return number;
+    }
+    console.log(divide(dividend, divisor))
 </script>
 
 </html>
