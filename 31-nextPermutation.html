@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<script>
+    var nums = [2,3,1,3,3];
+
+    var nextPermutation = function (nums) {
+        let length = nums.length;
+        let last = null;
+        let tail = null;
+        for (let i = length - 1; i >= 0; i--) {
+            if (nums[i] < nums[i + 1]) {
+                last = i;
+                break;
+            }
+        }
+        if (last != null) {
+            for (let j = last + 1; j < length; j++) {
+                if (nums[last] < nums[j]) {
+                    if (!tail || nums[j] - nums[last] <= nums[tail] - nums[last]) {
+                        tail = j;
+                    }
+                }
+            }
+            let a = nums[last]
+            nums[last] = nums[tail]
+            nums[tail] = a;
+        }
+        console.log(last, tail)
+        let i = last !== null ? (last + 1) : 0;
+        let j = length - 1;
+        console.log(i, j)
+        while (i <= j) {
+            let a = nums[i]
+            nums[i] = nums[j]
+            nums[j] = a;
+            i++;
+            j--;
+        }
+        console.log(nums)
+    };
+    console.log(nextPermutation(nums))
+</script>
+
+</html>
