@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<script>
+    var nums = [8, 8, 8, 8, 8, 8, 8, 8];
+    var target = 7;
+
+    let findIndex = (nums, target, start, end) => {
+        let middle = Math.round((start + end) / 2);
+        if (nums[start] === target) {
+            return start;
+        }
+        if (nums[end] === target) {
+            return end;
+        }
+        if (nums[middle] === target) {
+            return middle;
+        }
+        if (end - start <= 1) {
+            return -1;
+        }
+        if (target > nums[start] && target < nums[middle]) {
+            return findIndex(nums, target, start, middle - 1)
+        } else if (target > nums[middle] && target < nums[end]) {
+            return findIndex(nums, target, middle + 1, end)
+        } else {
+            return -1;
+        }
+    }
+
+    var getRange = (index, nums, target) => {
+        let start = index;
+        let end = index;
+        let isStartFound = false;
+        let isEndFound = false;
+        while (!isStartFound || !isEndFound) {
+            if (!isStartFound && nums[start - 1] != null && nums[start - 1] === target) {
+                start = start - 1;
+            } else {
+                isStartFound = true;
+            }
+            if (!isEndFound && nums[end + 1] != null && nums[end + 1] === target) {
+                end = end + 1;
+            } else {
+                isEndFound = true;
+            }
+        }
+        return [start, end];
+    }
+
+    var searchRange = function (nums, target) {
+        let start = 0;
+        let end = nums.length - 1;
+        let index = findIndex(nums, target, start, end);
+        console.log(index);
+        if (index == -1) {
+            return [-1, -1];
+        } else {
+            return getRange(index, nums, target);
+        }
+    };
+    console.log(searchRange(nums, target))
+</script>
+
+</html>

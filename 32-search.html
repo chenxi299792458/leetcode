@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<script>
+    var nums = [0, 2];
+    var target = 1;
+
+    let findIndex = (nums, target, start, end) => {
+        let middle = Math.round((start + end) / 2);
+        if (nums[start] === target) {
+            return start;
+        }
+        if (nums[end] === target) {
+            return end;
+        }
+        if (nums[middle] === target) {
+            return middle;
+        }
+        if (end - start <= 1) {
+            return -1;
+        }
+        if (target > nums[start] && target < nums[middle]) {
+            return findIndex(nums, target, start, middle - 1)
+        } else if (nums[start] > nums[middle] && (target < nums[middle] || target > nums[start])) {
+            return findIndex(nums, target, start, middle - 1)
+        } else if (target > nums[middle] && target < nums[end]) {
+            return findIndex(nums, target, middle + 1, end)
+        } else if (nums[end] < nums[middle] && (target > nums[middle] || target < nums[end])) {
+            return findIndex(nums, target, middle + 1, end)
+        } else {
+            return -1
+        }
+    }
+
+    var search = function (nums, target) {
+        let start = 0;
+        let end = nums.length - 1;
+        return findIndex(nums, target, start, end);
+    };
+    console.log(search(nums, target))
+</script>
+
+</html>
