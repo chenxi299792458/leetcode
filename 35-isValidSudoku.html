@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<script>
+    var board = [
+        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+        [".", "9", "8", ".", ".", ".", ".", "6", "."],
+        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+        [".", "6", ".", ".", ".", ".", "2", "8", "."],
+        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+        [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+    ]
+
+    let isRepeat = (nums) => {
+        let obj = {};
+        let result = true;
+        for (let i = 0; i < nums.length; i++) {
+            let num = nums[i];
+            if (num != ".") {
+                if (!obj[num]) {
+                    obj[num] = true;
+                } else {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    let mainArray = [
+        [0, 0],
+        [0, 1],
+        [0, 2],
+        [1, 0],
+        [1, 1],
+        [1, 2],
+        [2, 0],
+        [2, 1],
+        [2, 2]
+    ];
+
+    let sideArray = [
+        [0, 0],
+        [0, 3],
+        [0, 6],
+        [3, 0],
+        [6, 0],
+        [3, 3],
+        [6, 6],
+        [3, 6],
+        [6, 3]
+    ]
+
+    let getSquareArray = (nums, sideArr) => {
+        let arr = [];
+        for (let i = 0; i < 9; i++) {
+            let key = mainArray[i];
+            let number = nums[key[0] + sideArr[0]][key[1] + sideArr[1]];
+            arr.push(number);
+        }
+        return arr;
+    }
+
+    var isValidSudoku = function (board) {
+        let result = true;
+        // 横检查 
+        for (let i = 0; i < 9; i++) {
+            result = isRepeat(board[i]);
+            if (!result) {
+                break;
+            }
+        }
+        if (result) {
+            //竖检查
+            for (let i = 0; i < 9; i++) {
+                let arr = [];
+                for (let j = 0; j < 9; j++) {
+                    let ele = board[j][i];
+                    if (ele != ".") {
+                        arr.push(ele);
+                    }
+                }
+                result = isRepeat(arr);
+                if (!result) {
+                    break;
+                }
+            }
+        }
+        if (result) {
+            // 横竖重复检查通过，检查九宫格
+            for (let i = 0; i < 9; i++) {
+                let arr = getSquareArray(board, sideArray[i]);
+                result = isRepeat(arr);
+                if (!result) {
+                    break;
+                }
+            }
+        }
+        return result;
+    };
+    console.log(isValidSudoku(board))
+</script>
+
+</html>
