@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<script>
+let calculate = (candidates, target, arr, sum, index = -1) => {
+    let amount = 0;
+    sum.forEach(item => amount += item);
+    let lastNumber = -1;
+    for (let i = index + 1; i < candidates.length; i++) {
+      let number = candidates[i];
+    	if (number === lastNumber){
+    		continue;
+    	}
+      if (amount + number === target) {
+        arr.push(sum.concat(number));
+      } else if (amount + number < target) {
+        calculate(candidates, target, arr, sum.concat(number), i);
+      } else {
+        break;
+      }
+      lastNumber = number;
+    }
+  }
+
+  var combinationSum2 = function (candidates, target) {
+    let arr = [];
+    candidates = candidates.sort((a, b) => {
+      return a - b
+    })
+    calculate(candidates, target, arr, []);
+    return arr;
+  };
+</script>
+
+</html>
