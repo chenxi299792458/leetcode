@@ -1,0 +1,38 @@
+<script>
+  let nums = [5, 6, 4, 4, 6, 9, 4, 4, 7, 4, 4, 8, 2, 6, 8, 1, 5, 9, 6, 5, 2, 7, 9, 7, 9, 6, 9, 4, 1, 6, 8, 8, 4, 4, 2, 0, 3, 8, 5];
+
+  let doJump = (nums, times, pos, arr) => {
+    let start = nums[pos];
+    if (start + pos >= nums.length - 1) {
+      arr.push(times + 1);
+      return;
+    }
+    for (let i = 1; i <= start; i++) {
+      doJump(nums, times + 1, pos + i, arr);
+    }
+  }
+
+  var jump = function (nums) {
+    let arr = [];
+    let start = nums[0];
+    let length = nums.length;
+    if (length == 1) {
+      return 0;
+    }
+    if (start >= length - 1) {
+      return 1;
+    }
+    for (let i = 1; i <= start; i++) {
+      doJump(nums, 1, i, arr);
+    }
+    let min = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      if (min > arr[i]) {
+        min = arr[i];
+      }
+    }
+    return min;
+  };
+
+  console.log(jump(nums));
+</script>

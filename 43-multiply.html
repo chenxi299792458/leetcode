@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <title>weiCC</title>
+  </head>
+
+  <body></body>
+
+  <script>
+    var num1 = "112",
+      num2 = "435";
+
+    var multiply = function(num1, num2) {
+      if (num1 == "0" || num2 == "0") {
+        return "0";
+      }
+      if (num1 == "1" || num2 == "1") {
+        return num1 == "1" ? num2 : num1;
+      }
+      let result = "";
+      let numbers1 = num1.split("").reverse();
+      let numbers2 = num2.split("").reverse();
+      let arr = [];
+      for (let i = 0; i < numbers1.length; i++) {
+        let number1 = numbers1[i];
+        for (let j = 0; j < numbers2.length; j++) {
+          let number2 = numbers2[j];
+          let number = Number(number1) * Number(number2);
+          let index = i + j;
+          arr[index] = (arr[index] === undefined ? 0 : arr[index]) + number;
+        }
+      }
+      let add = 0;
+      for (let i = 0; i < arr.length; i++) {
+        let number = arr[i];
+        if (add > 0) {
+          number += add;
+          add = 0;
+        }
+        if (number >= 10) {
+          add = Math.floor(number / 10);
+          number = number % 10;
+        }
+        result = number.toString() + result;
+      }
+      if (add > 0) {
+        result = add + result;
+      }
+      return result;
+    };
+    console.log(multiply(num1, num2));
+  </script>
+</html>
