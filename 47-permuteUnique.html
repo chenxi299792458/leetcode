@@ -1,0 +1,31 @@
+<script>
+  let nums = [1, 1, 3];
+
+  var func = (arr, number) => {
+    if (arr.length == 0) {
+      return [[number]];
+    }
+    let result = [];
+    for (const array of arr) {
+      for (let i = 0; i < array.length + 1; i++) {
+        let newArr = Array(array.length + 1).fill();
+        newArr = [...array.slice(0, i), number, ...array.slice(i)];
+        result.push(newArr);
+      }
+    }
+    return result;
+  };
+
+  var permuteUnique = function(nums) {
+    let arr = [];
+    let last = null;
+    for (number of nums) {
+      arr = func(arr, number);
+    }
+    return [...new Set(arr.map(array => array.join("|")))].map(item =>
+      item.split("|").map(item => +item)
+    );
+  };
+
+  console.log(permuteUnique(nums));
+</script>
